@@ -51,9 +51,10 @@ def record_food():
 @app.route('/calculate-day/', methods=['GET'])
 def calculate_day():
     collection = db['records']
-    yesterday = datetime.datetime.now() - datetime.timedelta(days = 1)
+    yesterday = datetime.now() - timedelta(days = 1)
     results = collection.find({"time": {"$gt": yesterday}})
-    print results
+    for i in results:
+        print i
 
 if __name__ == '__main__':
     app.debug = True
