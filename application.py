@@ -41,17 +41,18 @@ def get_food(food_id):
 
 @app.route('/record/', methods=['POST'])
 def record_food():
-    data = {'food': reqeust.form.get('food_id'),
+    data = {'food': request.form.get('food_id'),
             'amount': request.form.get('amount'),
             'time': datetime.now()}
     collection = db['records']
     collection.insert(data)
+    return dumps({'message': 'ok'})
 
 @app.route('/calculate-day/', methods=['GET'])
 def calculate_day():
     collection = db['records']
     yesterday = datetime.datetime.now() - datetime.timedelta(days = 1)
-    results = collection.find("time": {"$gt": yesterday})
+    results = collection.find({"time": {"$gt": yesterday}})
     print results
 
 if __name__ == '__main__':
